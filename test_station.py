@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 """Unit test for the station module"""
 
+from haversine import haversine
 from floodsystem.station import MonitoringStation
 from floodsystem.stationdata import build_station_list
 from floodsystem.geo import stations_by_distance
