@@ -7,6 +7,8 @@ geographical data.
 """
 from distutils.command.build_clib import build_clib
 from haversine import haversine
+haversine.path
+haversine.executable
 from .stationdata import build_station_list
 from .utils import sorted_by_key  # noqa
 
