@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: MIT
 """Unit test for the station module"""
 
-from haversine import haversine
 from floodsystem.station import MonitoringStation
 from floodsystem.stationdata import build_station_list
 from floodsystem.geo import stations_by_distance
@@ -40,13 +39,13 @@ def test_stations_by_distance():
     town = "My Town"
     s = MonitoringStation(s_id, m_id, label, coord, trange, river, town)
 
-    test_list = [s]
-    p = (-2.0, 4.0)
+    test_list = [s]     # creating a 'test' list - supposed to emulate stations 
+    p = (-2.0, 4.0)     # so that distance is 0 
 
-    x = stations_by_distance(test_list,p)
-    d = [lis[1] for lis in x]
+    x = stations_by_distance(test_list,p) # does the function 
+    d = [lis[1] for lis in x] # takes the 2nd element from the tuple
 
-    assert d <= 1e-4
+    assert d <= 1e-4 # tolerance is kept a little high because i am not sure how haversine numerically computes
 
 def test_station_within_radius(): 
 
@@ -60,5 +59,6 @@ def test_station_within_radius():
     town = "My Town"
     s = MonitoringStation(s_id, m_id, label, coord, trange, river, town)
 
+    r = 0 
 
     
