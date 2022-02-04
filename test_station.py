@@ -60,5 +60,8 @@ def test_station_within_radius():
     s = MonitoringStation(s_id, m_id, label, coord, trange, river, town)
 
     r = 0 
-
+    
+    #!!! need to fix the test for the test_stations_by_distance and need to add this test (within radius check)
+    # add tests for typical_range_consistent - 1F
+    # add tests for inconsistent list - 1F
     
