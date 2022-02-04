@@ -6,6 +6,7 @@
 from floodsystem.station import MonitoringStation
 from floodsystem.stationdata import build_station_list
 from floodsystem.geo import stations_by_distance
+from floodsystem.geo import stations_within_radius
 
 def test_create_monitoring_station():
 
@@ -45,5 +46,18 @@ def test_stations_by_distance():
     d = [lis[1] for lis in x]
 
     assert d == 0
+
+def test_station_within_radius(): 
+
+    # Create a station
+    s_id = "test-s-id"
+    m_id = "test-m-id"
+    label = "some station"
+    coord = (-2.0, 4.0)
+    trange = (-2.3, 3.4445)
+    river = "River X"
+    town = "My Town"
+    s = MonitoringStation(s_id, m_id, label, coord, trange, river, town)
+
     
     
