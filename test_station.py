@@ -45,7 +45,7 @@ def test_stations_by_distance():
     x = stations_by_distance(test_list,p)
     d = [lis[1] for lis in x]
 
-    assert d == 0
+    assert d <= 1e-4
 
 def test_station_within_radius(): 
 
@@ -59,5 +59,5 @@ def test_station_within_radius():
     town = "My Town"
     s = MonitoringStation(s_id, m_id, label, coord, trange, river, town)
 
-    
+
     
