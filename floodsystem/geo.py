@@ -18,3 +18,13 @@ def stations_by_distance(stations, p):
         distance_list.append((station.name,haversine(station.coord,p))) # haversine function computes the distance between two coordinates on earth   
     return sorted_by_key(distance_list,1) # sort by 2nd entry in tuple 
     
+def stations_within_radius(stations, centre, r):
+    
+    station_within_r = []
+
+    for station in stations: 
+        d = haversine(centre, station.coord)
+        if d <= r: 
+            station_within_r.append(station)
+    
+    return station_within_r
