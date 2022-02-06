@@ -6,7 +6,7 @@ geographical data.
 
 """
 from distutils.command.build_clib import build_clib
-#from haversine import haversine
+from haversine import haversine, Unit
 from .stationdata import build_station_list
 from .utils import sorted_by_key  # noqa
 
@@ -33,6 +33,19 @@ def rivers_with_station(stations):
     """returns a container (set) with the names of the rivers with a monitoring station"""
     
     r_w_s = {station.river for station in stations}
-    #r_w_s = {'apple', 'orange', 'apple', 'pear', 'orange', 'banana'}
 
     return r_w_s
+
+def stations_by_river(stations):
+    rivers = rivers_with_station(stations)
+    river_dict = {}
+    for river in rivers:
+        river_dict[river] = []
+
+    for station in stations:
+        river_dict[station.river].append(station.name)
+
+    for river in river_dict:
+        river_dict[river].sort()
+
+    return river_dict
