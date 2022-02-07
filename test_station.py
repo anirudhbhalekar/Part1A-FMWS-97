@@ -109,7 +109,7 @@ def stations_test_return():
     m_id4 = "test-m-id"
     label4 = "some station"
     coord4 = (-2.0, 4.0)
-    trange4 = None
+    trange4 = (1,2)
     river4 = "River Y"
     town4 = "My Town"
     z = MonitoringStation(s_id4, m_id4, label4, coord4, trange4, river4, town4)
@@ -121,7 +121,7 @@ def test_rivers_with_stations():
     stations = stations_test_return()
     test_list = rivers_with_station(stations)
 
-    assert test_list == ["River X","River X2","River Y"]
+    assert test_list == ["River X","River X2","River Y", "River Y"]
 
 def test_rivers_by_SN():
     stations = stations_test_return()
