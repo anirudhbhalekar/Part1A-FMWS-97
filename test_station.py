@@ -43,9 +43,9 @@ def test_stations_by_distance():
     p = (-2.0, 4.0)     # so that distance is 0 
 
     x = stations_by_distance(test_list,p) # does the function 
-    d = [lis[1] for lis in x] # takes the 2nd element from the tuple
+    d = [lis[1] for lis in x][0] # takes the 2nd element from the tuple
 
-    assert d <= 1e-4 # tolerance is kept a little high because i am not sure how haversine numerically computes
+    assert d <= 1e-5 # tolerance is kept a little high because i am not sure how haversine numerically computes
 
 def test_station_within_radius(): 
 
