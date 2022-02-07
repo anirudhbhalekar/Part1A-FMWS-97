@@ -7,6 +7,7 @@ from floodsystem.station import MonitoringStation
 from floodsystem.stationdata import build_station_list
 from floodsystem.geo import stations_by_distance
 from floodsystem.geo import stations_within_radius
+from floodsystem.station import inconsistent_typical_range_stations
 
 def test_create_monitoring_station():
 
@@ -60,6 +61,40 @@ def test_station_within_radius():
     s = MonitoringStation(s_id, m_id, label, coord, trange, river, town)
 
     r = 0 
+
+
+def test_typical_range_stations(): 
+    
+    s_id = "test-s-id"
+    m_id = "test-m-id"
+    label = "some station"
+    coord = (-2.0, 4.0)
+    trange = (-2.3, 3.4445)
+    river = "River X"
+    town = "My Town"
+    s = MonitoringStation(s_id, m_id, label, coord, trange, river, town)
+
+    s_id2 = "test-s-id"
+    m_id2 = "test-m-id"
+    label2 = "some station"
+    coord2 = (-2.0, 4.0)
+    trange2 = (5.3, 3.4445)
+    river2 = "River X2"
+    town2 = "My Town2"
+    k = MonitoringStation(s_id2, m_id2, label2, coord2, trange2, river2, town2)
+
+    s_id3 = "test-s-id"
+    m_id3 = "test-m-id"
+    label3 = "some station"
+    coord3 = (-2.0, 4.0)
+    trange3 = None
+    river3 = "River X"
+    town3 = "My Town"
+    j = MonitoringStation(s_id3, m_id3, label3, coord3, trange3, river3, town3)
+
+    stations = [s,k,j]
+    inconsistent_stations = [k,j]
+    assert inconsistent_typical_range_stations(stations) == inconsistent_stations
     
     #!!! need to fix the test for the test_stations_by_distance and need to add this test (within radius check)
     # add tests for typical_range_consistent - 1F
