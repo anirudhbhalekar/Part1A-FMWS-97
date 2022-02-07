@@ -2,12 +2,14 @@
 #
 # SPDX-License-Identifier: MIT
 """Unit test for the station module"""
+from turtle import st
 from floodsystem.station import MonitoringStation
 from floodsystem.stationdata import build_station_list
 from floodsystem.geo import stations_by_distance
 from floodsystem.geo import stations_within_radius
 from floodsystem.station import inconsistent_typical_range_stations
 from floodsystem.geo import rivers_with_station
+from floodsystem.geo import rivers_by_station_number
 
 def test_create_monitoring_station():
 
@@ -103,7 +105,16 @@ def stations_test_return():
     town3 = "My Town"
     j = MonitoringStation(s_id3, m_id3, label3, coord3, trange3, river3, town3)
 
-    stations = [s,k,j]
+    s_id4 = "test-s-id"
+    m_id4 = "test-m-id"
+    label4 = "some station"
+    coord4 = (-2.0, 4.0)
+    trange4 = None
+    river4 = "River Y"
+    town4 = "My Town"
+    z = MonitoringStation(s_id4, m_id4, label4, coord4, trange4, river4, town4)
+    
+    stations = [s,k,j,z]
     return stations
 
 def test_rivers_with_stations(): 
@@ -112,4 +123,9 @@ def test_rivers_with_stations():
 
     assert test_list == ["River X","River X2","River Y"]
 
+def test_rivers_by_SN():
+    stations = stations_test_return()
+    Y_list = rivers_by_station_number(stations, 1)
 
+    assert Y_list == ["River Y"]
+    
