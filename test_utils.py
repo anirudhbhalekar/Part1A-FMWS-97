@@ -1,6 +1,7 @@
 """Unit test for the utils module"""
 
 import floodsystem.utils
+from my_haversine import my_haversine_func
 
 
 def test_sort():
@@ -55,3 +56,9 @@ def test_reverse_sort():
     assert list1[0] == c
     assert list1[1] == a
     assert list1[2] == b
+
+def test_my_haversine(): 
+    coord1 = (1,2)
+    coord2 = (2,1)
+
+    assert round(my_haversine_func(coord1, coord2),1) == 157.3
