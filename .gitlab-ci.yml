@@ -14,6 +14,11 @@ test:
 
   # Run deliverables. Add your deliverables to the test system here.
   - python Task1A.py
+  - python Task1B.py
+  - python Task1C.py
+  - python Task1D.py
+  - python Task1E.py
+  - python Task1F.py
 
   - python Task2A.py
   - python Task2D.py
