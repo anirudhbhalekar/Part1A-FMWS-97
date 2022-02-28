@@ -5,7 +5,10 @@ from floodsystem.stationdata import update_water_levels
 
 def run(): 
     tol = 0.8
-    list_over_tol = stations_level_over_threshold(update_water_levels(build_station_list()),tol)
+    #print()
+    stations = build_station_list()
+    update_water_levels(stations)
+    list_over_tol = stations_level_over_threshold(stations, tol)
     
     print(list_over_tol)
 
