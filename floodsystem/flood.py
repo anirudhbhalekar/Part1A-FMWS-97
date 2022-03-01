@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
+from hashlib import new
 from .utils import sorted_by_key
 
 def stations_level_over_threshold(stations, tol): 
@@ -16,5 +17,17 @@ def stations_level_over_threshold(stations, tol):
     stot_list = sorted_by_key(stot_list, 1, reverse=True)
     return stot_list
         
+def stations_highest_rel_level(stations, N):
+    level_list = []
+    for i in range(N):
+        level_list.append(stations_level_over_threshold(stations,-1000)[i])
+    station_list = []
+    for tup in level_list:
+        for station in stations: 
+            if station.name == tup[0]:
+                station_list.append(station)
+    return station_list
 
 
+
+    
