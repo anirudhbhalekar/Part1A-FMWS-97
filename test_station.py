@@ -123,9 +123,4 @@ def test_rivers_with_stations():
 
     assert test_list == ["River X","River X2","River Y", "River Y"]
 
-def test_rivers_by_SN():
-    stations = stations_test_return()
-    Y_list = rivers_by_station_number(stations, 1)
-
-    assert Y_list == [("River Y", 2),("River Y", 2)]
     
