@@ -122,5 +122,3 @@ def test_rivers_with_stations():
     test_list = rivers_with_station(stations)
 
     assert test_list == ["River X","River X2","River Y", "River Y"]
-
-    
