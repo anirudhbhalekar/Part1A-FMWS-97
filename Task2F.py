@@ -23,7 +23,7 @@ def make_plots(name,dt,p):
         return
     dates, levels = fetch_measure_levels(station_cam.measure_id, dt=datetime.timedelta(days=dt))
 
-    plot_water_levels_with_fit(station_cam, dates, levels, p)
+    plot_water_levels_with_fit(station_cam, dates, levels, p, extension=0.25)
 
 if __name__ == "__main__":
     stations = build_station_list()
@@ -34,4 +34,4 @@ if __name__ == "__main__":
         if i.name == "Letcombe Bassett": # this station has not had a reading in 2 days - causing problems
             pass
         else:
-            make_plots(i.name, 2, 4)
+            make_plots(i.name, 1, 4)

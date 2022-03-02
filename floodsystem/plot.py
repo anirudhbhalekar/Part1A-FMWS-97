@@ -24,7 +24,7 @@ def plot_water_levels(station, dates, levels):
 
     plt.show()
 
-def plot_water_levels_with_fit(station, dates, levels, p):
+def plot_water_levels_with_fit(station, dates, levels, p, extension = 0):
     
     poly, d0 = polyfit(dates, levels, p)
     time = matplotlib.dates.date2num(dates)
@@ -35,7 +35,7 @@ def plot_water_levels_with_fit(station, dates, levels, p):
     plt.plot(time, [station.typical_range[0]]*len(time), label = "Lower range")
     plt.plot(time, [station.typical_range[1]]*len(time), label = "Upper range")
 
-    x1 = np.linspace(time[0], time[-1], 30)
+    x1 = np.linspace(time[0] + extension, time[-1], 40)
     plt.plot(x1, poly(x1 - time[0]), label = "Polyfit")      
 
     plt.xlabel('Time')
