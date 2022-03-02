@@ -29,9 +29,8 @@ if __name__ == "__main__":
     stations = build_station_list()
     update_water_levels(stations)
 
-    make_plots("Surfleet Sluice",1, 4)
-    """for i in stations_highest_rel_level(stations, 5):
+    for i in stations_highest_rel_level(stations, 5):
         if i.name == "Letcombe Bassett": # this station has not had a reading in 2 days - causing problems
             pass
         else:
-            make_plots(i.name, 1, 4)"""
+            make_plots(i.name, 1, 4)
