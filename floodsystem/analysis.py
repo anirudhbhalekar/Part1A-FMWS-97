@@ -2,8 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 from matplotlib import dates
+import datetime 
 
 def polyfit(dates, levels, p):
+    now = matplotlib.dates.date2num(datetime.datetime.utcnow())
     x = matplotlib.dates.date2num(dates)
     y = levels
 
@@ -12,4 +14,4 @@ def polyfit(dates, levels, p):
         poly = np.poly1d(p_coeff)
         return poly, x[0]
     else: 
-        raise ValueError("Date array has 0 length")
+        return 0, now
