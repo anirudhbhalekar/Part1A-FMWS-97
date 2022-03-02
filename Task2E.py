@@ -19,8 +19,7 @@ def run():
     if not station_cam:
         print("Station {} could not be found".format(station_name))
         return
-    dates, levels = fetch_measure_levels(
-        station_cam.measure_id, dt=datetime.timedelta(days=dt))
+    dates, levels = fetch_measure_levels(station_cam.measure_id, dt=datetime.timedelta(days=dt))
 
     plot_water_levels(station_cam, dates, levels)
 
