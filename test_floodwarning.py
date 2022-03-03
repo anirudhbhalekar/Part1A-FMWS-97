@@ -2,7 +2,7 @@ from floodsystem.station import MonitoringStation
 from floodsystem.flood import stations_highest_rel_level
 from floodsystem.flood import stations_level_over_threshold
 
-def test_relative_water_lvl(): 
+def test_floodwarning():
     s_id = "test-s-id"
     m_id = "test-m-id"
     label = "some station"
@@ -27,7 +27,7 @@ def test_relative_water_lvl():
     m_id3 = "test-m-id"
     label3 = "some station"
     coord3 = (-2.0, 4.0)
-    trange3 = None
+    trange3 = (0,0)
     river3 = "River Y"
     town3 = "My Town"
     j = MonitoringStation(s_id3, m_id3, label3, coord3, trange3, river3, town3)
@@ -44,11 +44,3 @@ def test_relative_water_lvl():
     z.latest_level = 2
 
     stations = [s,k,j,z]
-    tol = 7 
-    lst = stations_level_over_threshold(stations, tol)
-    lst2 = stations_highest_rel_level(stations, 2)
-
-    assert lst[0][1] == 10
-    assert lst2[1].latest_level == 5
-    
-
