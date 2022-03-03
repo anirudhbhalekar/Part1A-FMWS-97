@@ -10,8 +10,11 @@ def stations_level_over_threshold(stations, tol):
     stot_list = []
     for station in stations: 
         if station.latest_level != None: 
-            if station.latest_level > tol: 
-                stot_list.append((station.name, station.latest_level))
+            high = station.typical_range[1]
+            low = station.typical_range[0]
+            rel_level = (station.latest_level - low)/(high - low)
+            if rel_level > tol: 
+                stot_list.append((station.name, rel_level))
             else: pass 
         
     stot_list = sorted_by_key(stot_list, 1, reverse=True)
