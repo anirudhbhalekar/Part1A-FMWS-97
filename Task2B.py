@@ -9,7 +9,8 @@ def run():
     update_water_levels(stations)
     list_over_tol = stations_level_over_threshold(stations, tol)
     
-    print(list_over_tol)
+    for i in list_over_tol:
+        print('{:50}{:<5}'.format(i[0], i[1]))
 
 if __name__ == "__main__":
     run()

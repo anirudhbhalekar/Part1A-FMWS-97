@@ -11,13 +11,17 @@ def plot_water_levels(station, dates, levels):
    
 
     # Plot
-    plt.plot(dates, levels)
+    plt.plot(dates, levels, label = "Raw Data")
+    plt.plot(dates, [station.typical_range[0]]*len(dates), label = "Lower range")
+    plt.plot(dates, [station.typical_range[1]]*len(dates), label = "Upper range")
 
     # Add axis labels, rotate date labels and add plot title
     plt.xlabel('Date')
     plt.ylabel('Water Level (m)')
     plt.xticks(rotation=45);
     plt.title("{} data".format(station.name))
+
+    plt.legend(loc="upper right")
 
     # Display plot
     plt.tight_layout()  # This makes sure plot does not cut off date labels

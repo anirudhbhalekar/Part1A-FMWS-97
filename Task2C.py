@@ -15,4 +15,6 @@ if __name__ == "__main__":
 
     stations = build_station_list()
     update_water_levels(stations)
-    print(return_name_and_level(stations,10))
+
+    for i in return_name_and_level(stations,10):
+        print('{:50}{:<5}'.format(i[0], i[1]))

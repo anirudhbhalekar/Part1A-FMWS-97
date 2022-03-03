@@ -2,29 +2,43 @@
 We extend the polyfit 5 hours and only consider the past 1 day (for better curve fit)
 5 hours ought to be enough to evacuate citizens - with higher extensions the graphs seem to get more exaggerated
 
-Unlikely - value is 0-50% below upper range and is sloping down
-Low - value is 0-50% below upper range and has a positive slope of less than 1
-Moderate - value is 50-75% below upper range and has a positive slope of less than 1
-High - value is 50-75% below upper range and has a positive slope of greater than 1 OR 
-        value is between 
-        
-Severe - value is between 75-100% of upper range and has a positive slop greater than 1 OR
+Each station will have a severity score - for each town the severity will be computed by taking the average of 
+
+Unlikely - Average severity score   < 2
+Low - Average severity score        < 4
+Moderate - Average severity score   < 6
+High - Average severity score       < 8
+Severe - Aeverage severity score    > 8
+
+
+This is for the towns, the way to classify them is to average the severity scores across 
+each of its stations
+
+For each station the severity score is calculated as follows: 
+
+1 - value is 0-50% below upper range and is sloping down
+2 - value is 0-50% below upper range and has a positive slope of less than 1
+3 - value is 50-75% below upper range and has a positive slope of less than 1
+4 - value is 50-75% below upper range and has a positive slope of greater than 1 OR 
+        value is between        
+5 - value is between 75-100% of upper range and has a positive slop greater than 1 OR
          value is above typical range
 
 note: it is entirely possible for the value to be small (compared to upper range) but
 for the derivative to be very high (in the polyfit)
 
 % limit:derivative	    <0	        <1	        <5	        <10         >10
-40>	                    Unlikely 	low	        low	        Moderate    High
-60>	                    low	        low	        Moderate	High        High
-80>	                    low	        Moderate	High	    High        Severe
-100>	                Moderate	High	    High  	    Severe      Severe
-100<	                High	    High	    Severe	    Severe      Severe
+40>	                    1	        2	        3	        4	        5
+60>                     2	        3	        4	        5	        6
+80>                     3	        4	        5	        6	        7
+100>                    4	        5	        6	        7	        8
+100<                    5	        6	        7	        8	        9
 
 
 """
 
 from operator import mod
+from anyio import start_blocking_portal
 import numpy as np 
 import matplotlib
 from floodsystem.datafetcher import fetch_measure_levels
@@ -86,11 +100,11 @@ def classify_severity(station, dt, p, extension):
     # possible extension - make it so it can read csv files, that way you can make the matrix on excel
     
     severity_matrix = [ 
-                        ["Unlikely", "Low", "Low", "Moderate", "High"],
-                        ["Low", "Low", "Moderate", "High", "High"],
-                        ["Low", "Moderate", "High", "High", "Severe"],
-                        ["Moderate", "High", "High", "Severe", "Severe"],
-                        ["High", "High", "Severe", "Severe", "Severe"],
+                        [1,2,3,4,5],
+                        [2,3,4,5,6],
+                        [3,4,5,6,7],
+                        [4,5,6,7,8],
+                        [5,6,7,8,9],
     ]
 
     row, col = return_row_col(val_percent, val_der)
@@ -124,50 +138,76 @@ def return_row_col(val_percent, val_der):
     
     return row, col
 
+def generate_towns_list(stations):
+    towns_list = []
+    for station in stations:
+        if station.town in towns_list: 
+            pass
+        else: 
+            towns_list.append(station.town)
+    return towns_list
+
 def test_graph(station_name, dt, p):
     make_plots(station_name, dt, p)
 
-def iterate_thru(stations, dt, p, ext, severity_index = "Severe"):
-    list_stations = []
-    
-    """ IMPORTANT - limiting the number of data entries to test - otherwise it takes too much time"""
-    stations = stations[:25] 
-    """ IMPORTANT - limiting the number of data entries to test - otherwise it takes too much time"""
-
+def stations_in_town(stations, town): 
+    stat_list = []
     for station in stations: 
-        if station.name == "Letcombe Bassett":
-            pass
-        elif classify_severity(station, dt, p, ext) == severity_index:
-            list_stations.append((station.name, station.latest_level))
+        if station.town == town: 
+            stat_list.append(station)
+    return stat_list
+
+def classify_town(stations, town, dt, p, extension):
+    severity = "Unlikely" # By default
+    stat_list = stations_in_town(stations, town)
+    score_list = []
+    for station in stat_list: 
+        score_list.append(classify_severity(station, dt, p, extension))
+    avg_score = average(score_list)
     
-    return list_stations
+    if avg_score   <  2: severity = "Unlikely".upper()
+    elif avg_score <  4: severity = "Low".upper() 
+    elif avg_score <  6: severity = "Moderate".upper() 
+    elif avg_score <  8: severity = "High".upper() 
+    elif avg_score >= 8: severity = "Severe".upper() 
+
+    return severity
+
+def iter_through_towns(stations, dt, p, extension, threshold = "Severe"):
+
+    """IMPORTANT: REMOVE BELOW LINE WHEN IMPLEMENTING PROGRAM"""
+    stations = stations[:100] # this is just to reduce computing time for the tests
+    """IMPORTANT: REMOVE ABOVE LINE WHEN IMPLEMENTING PROGRAM"""
+    
+    towns_list = generate_towns_list(stations)
+    town_severity_list = []
+
+    for town in towns_list: 
+        severity = classify_town(stations, town, dt, p, extension)
+        if severity == threshold:
+            town_severity_list.append((town, severity))
+    return town_severity_list
+
 if __name__ == "__main__":
    
     stations = build_station_list()
-    station = stations[20]
     
+    """"CONTROL VARIABLES"""
+
     dt = 1
     p = 4
     ext = 0.2
-    severity_index = "High"
+    severity_index = "Severe"
+
+    """END OF CONTROL VARIABLES"""
+    
+    severity_index = severity_index.upper()
     update_water_levels(stations)
 
-    stat_risk_list = iterate_thru(stations, dt, p, ext, severity_index = severity_index)
-
-    print("\n")
-    print("STATIONS AT {} RISK LISTED BELOW (WITH LATEST WATER LEVEL DATA)".format(severity_index.upper()))
-    print("\n")
-    print(stat_risk_list)
-    
-    
-    """
-    print(station.name)
-    print(polyvalues(station, dt, p, ext))
-    print(classify_severity(station, dt, p, ext))
-
-    #test_graph(station.name, dt, p)
-
-    """
+    tup = iter_through_towns(stations, dt, p, ext, severity_index)
+    print("TOWNS AT {} RISK".format(severity_index))
+    for i in tup: 
+        print('{:50}{:<5}'.format(i[0], i[1]))
     
        
 
