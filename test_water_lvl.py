@@ -152,14 +152,5 @@ def test_stations_in_town():
     assert stat_list[0].latest_level == 10
     assert len(stat_list) == 1
 
-def test_derivative_severity(): 
-    now = datetime.datetime.utcnow()
-    dates = np.linspace(0, 2, 10)
-    levels = [10]*len(dates)
-    
-    poly = polyfit(dates, levels, 3)
-    assert poly(2) == 10
-
-
 
 
