@@ -38,7 +38,6 @@ for the derivative to be very high (in the polyfit)
 """
 
 from operator import mod
-from anyio import start_blocking_portal
 import numpy as np 
 import matplotlib
 from floodsystem.datafetcher import fetch_measure_levels
