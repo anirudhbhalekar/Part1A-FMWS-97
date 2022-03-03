@@ -158,9 +158,7 @@ def test_derivative_severity():
     levels = [10]*len(dates)
     
     poly = polyfit(dates, levels, 3)
-    d_poly = np.polyder(poly)
-    some_val = d_poly(2)
-    assert some_val <= 0.1
+    assert poly(2) == 10
 
 
 
