@@ -154,9 +154,7 @@ def test_stations_in_town():
 
 def test_derivative_severity(): 
     now = datetime.datetime.utcnow()
-    dates = [datetime(2016, 12, 30), datetime(2016, 12, 31), datetime(2017, 1, 1),
-     datetime(2017, 1, 2), datetime(2017, 1, 3), datetime(2017, 1, 4),
-     datetime(2017, 1, 5)]
+    dates = np.linspace(0, 2, 10)
     levels = [10]*len(dates)
     
     poly = polyfit(dates, levels, 3)
