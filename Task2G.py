@@ -175,7 +175,7 @@ def classify_town(stations, town, dt, p, extension):
 def iter_through_towns(stations, dt, p, extension, threshold = "Severe"):
 
     """IMPORTANT: REMOVE BELOW LINE WHEN IMPLEMENTING PROGRAM"""
-    stations = stations[:100] # this is just to reduce computing time for the tests
+    stations = stations[:50] # this is just to reduce computing time for the tests
     """IMPORTANT: REMOVE ABOVE LINE WHEN IMPLEMENTING PROGRAM"""
     
     towns_list = generate_towns_list(stations)
@@ -196,7 +196,7 @@ if __name__ == "__main__":
     dt = 1
     p = 4
     ext = 0.2
-    severity_index = "Severe"
+    severity_index = "Low"
 
     """END OF CONTROL VARIABLES"""
     
@@ -204,7 +204,10 @@ if __name__ == "__main__":
     update_water_levels(stations)
 
     tup = iter_through_towns(stations, dt, p, ext, severity_index)
-    print("TOWNS AT {} RISK".format(severity_index))
+    print("\n")
+    print("TOWNS AT {} RISK\n".format(severity_index))
+    if len(tup) == 0: 
+        print("NONE DOCUMENTED\n")
     for i in tup: 
         print('{:50}{:<5}'.format(i[0], i[1]))
     
