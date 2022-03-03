@@ -1,6 +1,9 @@
 from floodsystem.station import MonitoringStation
 from floodsystem.flood import stations_highest_rel_level
 from floodsystem.flood import stations_level_over_threshold
+from Task2G import iter_through_towns
+from Task2G import generate_towns_list
+from Task2G import stations_in_town
 
 def test_floodwarning():
     s_id = "test-s-id"
@@ -44,3 +47,4 @@ def test_floodwarning():
     z.latest_level = 2
 
     stations = [s,k,j,z]
+

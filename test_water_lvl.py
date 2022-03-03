@@ -49,6 +49,6 @@ def test_relative_water_lvl():
     lst2 = stations_highest_rel_level(stations, 2)
 
     assert lst[0][1] == 10
-    assert lst2[1].latest_level == 5
+    assert lst2[1].latest_level == 10
 
 
