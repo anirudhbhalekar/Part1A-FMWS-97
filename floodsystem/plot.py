@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 
-from sqlalchemy import true
 from .analysis import polyfit
 import matplotlib
 import numpy as np
