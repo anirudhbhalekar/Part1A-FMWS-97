@@ -1,10 +1,5 @@
 from floodsystem.station import MonitoringStation
-from floodsystem.stationdata import build_station_list
-from floodsystem.geo import stations_by_distance
-from floodsystem.geo import stations_within_radius
-from floodsystem.station import inconsistent_typical_range_stations
-from floodsystem.geo import rivers_with_station
-from floodsystem.geo import rivers_by_station_number
+from floodsystem.flood import stations_highest_rel_level
 from floodsystem.flood import stations_level_over_threshold
 
 def test_relative_water_lvl(): 
@@ -50,6 +45,10 @@ def test_relative_water_lvl():
 
     stations = [s,k,j,z]
     tol = 7 
-    list = stations_level_over_threshold(stations, tol)
-    assert list[0][1] == 10
+    lst = stations_level_over_threshold(stations, tol)
+    lst2 = stations_highest_rel_level(stations, 2)
+
+    assert lst[0][1] == 10
+    assert lst2[1].latest_level == 5
+    
 
