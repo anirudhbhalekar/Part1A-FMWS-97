@@ -48,3 +48,8 @@ def test_floodwarning():
 
     stations = [s,k,j,z]
 
+    town_list = generate_towns_list(stations)
+    assert "My Town" in town_list
+    assert "My Town2" in town_list
+    assert len(town_list) == 2
+
